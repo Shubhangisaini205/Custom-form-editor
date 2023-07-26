@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const CategorizeQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState('');
   const [imageURL, setImageURL] = useState('');
+  const [mediaOption, setMediaOption] = useState('none');
   const [categories, setCategories] = useState(['', '']);
   const [items, setItems] = useState([{ name: '', category: '' }]);
 
@@ -61,19 +62,34 @@ const CategorizeQuestion = () => {
         className="block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
 
-      {/* Image Upload Option */}
-      <div className="mb-4 text-left">
-        <label htmlFor="headerImage" className="text-lg font-semibold mr-6">
-          Upload Question Image (Optional):
-        </label>
-        <input
-          id="headerImage"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="mt-2"
-        />
+     {/* Media Option */}
+     <div className='flex'>
+        <label className=" mr-5 block mb-2 text-gray-700 font-bold text-left ">Media Option:</label>
+        <select
+          value={mediaOption}
+          onChange={(e) => setMediaOption(e.target.value)}
+          className="w-[100px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          <option value="none">None</option>
+          <option value="image">Image</option>
+        </select>
       </div>
+
+      {/* Conditional rendering for image upload input */}
+      {mediaOption === 'image' && (
+        <div className="mb-4 text-left">
+          <label htmlFor="headerImage" className="text-lg font-semibold mr-6">
+            Upload Question Image (Optional):
+          </label>
+          <input
+            id="headerImage"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-2"
+          />
+        </div>
+      )}
 
       {/* Categories Input */}
       <div className="flex flex-col gap-4 mt-4">
