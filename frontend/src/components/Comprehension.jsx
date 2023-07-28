@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import SubQuestion from './SubQuestion';
 
-const Comprehension = () => {
-  const [instruction, setInstruction] = useState('');
-  const [passage, setPassage] = useState('');
+const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
+  const [instruction, setInstruction] = useState(questionData.data?.instruction || '');
+  const [passage, setPassage] = useState(questionData.data?.passage || '');
   const [mediaOption, setMediaOption] = useState('none');
-  const [subQuestions, setSubQuestions] = useState([]);
+  const [subQuestions, setSubQuestions] = useState(questionData.data?.subQuestions || []);
   const [imageURL, setImageURL] = useState('');
 
   const handleImageChange = (e) => {
@@ -19,6 +19,7 @@ const Comprehension = () => {
       reader.readAsDataURL(file);
     }
   };
+ 
 
   const addSubQuestion = () => {
     setSubQuestions([...subQuestions, { type: 'MCQ', question: '', options: [''], answer: '' }]);
@@ -37,6 +38,7 @@ const Comprehension = () => {
       updatedSubQuestions[index][field] = value;
     }
     setSubQuestions(updatedSubQuestions);
+   
   };
 
 
@@ -51,6 +53,11 @@ const Comprehension = () => {
     updatedSubQuestions[subIndex].options.splice(optionIndex, 1);
     setSubQuestions(updatedSubQuestions);
   };
+
+  const handleSaveQestion = ()=>{
+    // updateQuestionData(questionIndex, {categories,items} )
+    updateQuestionData(questionIndex,  {subQuestions, instructions:instruction,passage:passage});
+  }
 
   return (
     <div className="border-2 p-4 rounded mb-4">
@@ -122,6 +129,10 @@ const Comprehension = () => {
         className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Add Sub-Question
+      </button>
+
+      <button onClick={handleSaveQestion}>
+        Save question
       </button>
     </div>
   );

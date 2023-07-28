@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({setHeader}) => {
   const [imageURL, setImageURL] = React.useState('');
   const [heading, setHeading] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -23,6 +23,10 @@ const Header = () => {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
+
+  const saveHeader = ()=>{
+    setHeader({heading,description})
+  }
 
   return (
     <header className="mb-5 border-2 p-5">
@@ -80,6 +84,9 @@ const Header = () => {
           {description && <p className="text-gray-600">{description}</p>}
         </div>
       </div>
+      <button onClick={saveHeader}>
+        save header
+      </button>
     </header>
   );
 };

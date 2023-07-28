@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-const CategorizeQuestion = () => {
+const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
   const [questionTitle, setQuestionTitle] = useState('');
   const [imageURL, setImageURL] = useState('');
   const [mediaOption, setMediaOption] = useState('none');
-  const [categories, setCategories] = useState(['', '']);
+  const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([{ name: '', category: '' }]);
 
   const handleImageChange = (e) => {
@@ -36,6 +36,7 @@ const CategorizeQuestion = () => {
     const updatedCategories = [...categories];
     updatedCategories[index] = value;
     setCategories(updatedCategories);
+    // updateQuestionData(questionIndex, { ...questionData, data: { ...questionData.data, categories: updatedCategories } });
   };
 
   const handleItemChange = (index, key, value) => {
@@ -49,6 +50,11 @@ const CategorizeQuestion = () => {
     // Add a new item and assign it to the first category
     setItems([...items, { name: '', category: categories[0] }]);
   };
+
+  const handleSaveQestion = ()=>{
+    // console.log(categories,items)
+    updateQuestionData(questionIndex, {categories,items,questionTitle} )
+  }
 
   return (
     <div className="border-2 p-4 rounded mb-4">
@@ -96,6 +102,7 @@ const CategorizeQuestion = () => {
         <label className="text-gray-700 font-bold text-left">Categories</label>
         <input
           type="text"
+          name='category1'
           placeholder="Enter Category 1"
           value={categories[0]}
           onChange={(e) => handleCategoryChange(0, e.target.value)}
@@ -103,6 +110,7 @@ const CategorizeQuestion = () => {
         />
         <input
           type="text"
+          name='category2'
           placeholder="Enter Category 2"
           value={categories[1]}
           onChange={(e) => handleCategoryChange(1, e.target.value)}
@@ -153,6 +161,10 @@ const CategorizeQuestion = () => {
         className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Add Item
+      </button>
+
+      <button onClick={handleSaveQestion}>
+        save question
       </button>
     </div>
   );

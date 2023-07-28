@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 
-const ClozeQuestion = () => {
-  const [paragraph, setParagraph] = useState('');
-  const [options, setOptions] = useState([]);
+const ClozeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
+  const [paragraph, setParagraph] = useState(questionData.data?.paragraph || '');
+  const [options, setOptions] = useState(questionData.data?.options || []);
   const [selectedWord, setSelectedWord] = useState('');
 
   const paragraphRef = useRef(null);
@@ -10,6 +10,7 @@ const ClozeQuestion = () => {
   const handleParagraphChange = () => {
     const paragraphText = paragraphRef.current.innerText;
     setParagraph(paragraphText);
+    updateQuestionData(questionIndex, { ...questionData, data: { ...questionData.data, paragraph: paragraphText } });
   };
 
   const handleUnderline = () => {
@@ -21,15 +22,18 @@ const ClozeQuestion = () => {
       }
     }
   };
-  
-  
-  
+
+
+
+
+
 
 
   const handleConfirmUnderline = () => {
     setOptions((prevOptions) => [...prevOptions, selectedWord]);
     document.execCommand('underline', false, null); // Underline the selected text
     setSelectedWord('');
+    updateQuestionData(questionIndex, { ...questionData, data: { ...questionData.data, options: [...options, selectedWord] } });
   };
 
   const handleCancelUnderline = () => {
@@ -38,12 +42,12 @@ const ClozeQuestion = () => {
     setParagraph(replacedText);
     setSelectedWord('');
   };
-  
+
 
   return (
     <div className="border-2 p-4 rounded mb-4">
       {/* Paragraph Input */}
-      <label className="block mb-2 text-gray-700 font-bold text-left">Type Paragraph:</label>
+      <label className="block mb-2 text-gray-700 font-bold text-left">Type Sentence:</label>
       <div
         ref={paragraphRef}
         onInput={handleParagraphChange}
@@ -52,7 +56,7 @@ const ClozeQuestion = () => {
         suppressContentEditableWarning
         className="block w-full rounded-md border-2 -gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
       />
-       
+
 
       {/* Cloze Question Preview */}
       <label className="block mb-2 text-gray-700 font-bold text-left">Question Preview:</label>
@@ -82,30 +86,14 @@ const ClozeQuestion = () => {
             readOnly
             className="flex-1 rounded-md border-2-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
           />
-          {/* <button
+          <button
             type="button"
             onClick={() => setOptions((prevOptions) => prevOptions.filter((_, i) => i !== index))}
-            className="p-1 rounded-full bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
-            X
-          </button> */}
-          <button
-          type="button"
-          onClick={() => setOptions((prevOptions) => prevOptions.filter((_, i) => i !== index))}
-        >
-          ❌
-        </button>
+            ❌
+          </button>
         </div>
       ))}
-
-      {/* Add Option Button */}
-      <button
-        type="button"
-        onClick={() => setOptions((prevOptions) => [...prevOptions, ''])}
-        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Add Option
-      </button>
 
       {/* Confirmation Popup */}
       {selectedWord && (
@@ -129,6 +117,13 @@ const ClozeQuestion = () => {
           </div>
         </div>
       )}
+
+      <button
+        onClick={() => updateQuestionData(questionIndex,{  paragraph, options } )}
+        className='bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+      >
+        Save Question
+      </button>
     </div>
   );
 };
