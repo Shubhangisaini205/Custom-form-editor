@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const { connection } = require("./config/db");
 const { FormRouter } = require("./route/FormRoutes");
+const { ResponseRouter } = require("./route/ResponseRoutes");
 const app = express()
 app.use(cors());
 app.use(express.json());
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/forms",FormRouter)
+app.use("/response",ResponseRouter)
 
 app.listen(PORT, async () => {
     try {
