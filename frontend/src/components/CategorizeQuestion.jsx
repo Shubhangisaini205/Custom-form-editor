@@ -36,7 +36,7 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
     const updatedCategories = [...categories];
     updatedCategories[index] = value;
     setCategories(updatedCategories);
-    // updateQuestionData(questionIndex, { ...questionData, data: { ...questionData.data, categories: updatedCategories } });
+    
   };
 
   const handleItemChange = (index, key, value) => {
@@ -52,7 +52,6 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
   };
 
   const handleSaveQestion = ()=>{
-    // console.log(categories,items)
     updateQuestionData(questionIndex, {categories,items,questionTitle} )
   }
 
@@ -138,6 +137,7 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
               onChange={(e) => handleItemChange(index, 'category', e.target.value)}
               className="flex-1 rounded-md border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
+              <option value="">Select the Category</option>
               {categories.map((category, index) => (
                 <option key={index} value={category}>
                   {category}
@@ -163,7 +163,8 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
         Add Item
       </button>
 
-      <button onClick={handleSaveQestion}>
+      <button onClick={handleSaveQestion}
+      className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
         save question
       </button>
     </div>

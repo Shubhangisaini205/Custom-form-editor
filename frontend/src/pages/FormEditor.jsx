@@ -9,7 +9,6 @@ const FormEditor = () => {
   const [ formId, setFormId] = useState("")
   const [questions, setQuestions] = useState([])
   const [header, setHeader] = useState("")
-  // console.log(header)
   const addQuestion = (type) => {
     let initialData;
     if (type === 'Categorize') {
@@ -31,8 +30,7 @@ const FormEditor = () => {
   const handleQuestionDataChange = (index, data) => {
     const updatedQuestions = [...questions];
     updatedQuestions[index] = { ...updatedQuestions[index], data };
-    setQuestions(updatedQuestions);
-    // console.log(questions)
+    setQuestions(updatedQuestions)
   };
 
   const handlePointsChange = (index, points) => {
@@ -55,19 +53,19 @@ const FormEditor = () => {
     setFormId(randomId)
 
     obj = { formId:randomId, header, questions }
-    console.log(obj);
-
-    fetch("http://localhost:8080/forms/add", {
+    
+   console.log(obj)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/forms/add`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(obj)
     })
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        alert("Form created successfully")
+      })
       .catch((err) => console.log(err))
   };
-
-  console.log(formId,"XXXX")
   return (
     <div className='w-[800px] m-auto mb-20 border-2 p-5 pb-10'>
       <h2 className='text-2xl font-semibold mb-4'> Custom Form Editor</h2>
@@ -125,14 +123,14 @@ const FormEditor = () => {
 
       <div className='mb-4 text-left'>
         <label className='text-lg font-semibold mr-6'>Add a Question:</label>
-        <div className='text-center'>
-          <button onClick={() => addQuestion('Categorize')} className='text-green-600 font-semibold'>
+        <div className='text-center flex gap-10 justify-center mt-6'>
+          <button onClick={() => addQuestion('Categorize')} className=' border-2 p-2 text-green-600 font-semibold'>
             + Add Categorize Question
           </button>
-          <button onClick={() => addQuestion('Cloze')} className='text-green-600 font-semibold'>
+          <button onClick={() => addQuestion('Cloze')} className='border-2  p-2  text-green-600 font-semibold'>
             + Add Cloze Question
           </button>
-          <button onClick={() => addQuestion('Comprehension')} className='text-green-600 font-semibold'>
+          <button onClick={() => addQuestion('Comprehension')} className='border-2  p-2  text-green-600 font-semibold'>
             + Add Comprehension Question
           </button>
         </div>
@@ -146,7 +144,7 @@ const FormEditor = () => {
 
       <Link to={`/preview/${formId}`}>
         <button
-          className='bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+          className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
         >
           Preview/Fill
         </button>

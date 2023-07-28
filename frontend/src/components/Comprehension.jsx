@@ -131,7 +131,8 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
         Add Sub-Question
       </button>
 
-      <button onClick={handleSaveQestion}>
+      <button onClick={handleSaveQestion}
+      className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
         Save question
       </button>
     </div>
