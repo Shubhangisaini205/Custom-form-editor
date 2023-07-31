@@ -71,7 +71,7 @@ const FormEditor = () => {
       .catch((err) => console.log(err))
   };
   return (
-    <div className='w-[800px] m-auto mb-20 border-2 p-5 pb-10 mt-10'>
+    <div className='w-[800px] m-auto mb-20 border-2 p-5 pb-10 mt-10 bg-gray-100'>
       <h2 className='text-3xl font-bold mb-4 p-5'> Custom Form Editor</h2>
       <Header setHeader={setHeader} />
       {questions.map((question, index) => (

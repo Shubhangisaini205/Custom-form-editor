@@ -84,7 +84,7 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
         <select
           value={mediaOption}
           onChange={(e) => setMediaOption(e.target.value)}
-          className="w-[90px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="w-[80px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="none">None</option>
           <option value="image">Image</option>
