@@ -55,14 +55,14 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
   };
 
   const handleSaveQestion = ()=>{
-    // updateQuestionData(questionIndex, {categories,items} )
     updateQuestionData(questionIndex,  {subQuestions, instructions:instruction,passage:passage});
+    alert("Question Saved Succesfully")
   }
 
   return (
     <div className="border-2 p-4 rounded mb-4">
       {/* Overall Instruction */}
-      <label className="block mb-2 text-gray-700 font-bold text-left">Overall Instruction:</label>
+      <label className="block mb-2 text-gray-700 font-bold text-left">Instructions:</label>
       <input
         type="text"
         value={instruction}
@@ -71,7 +71,7 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
       />
 
       {/* Passage */}
-      <label className="block mb-2 text-gray-700 font-bold text-left">Deatailed question:</label>
+      <label className="block mb-2 text-gray-700 font-bold text-left"> Passage:</label>
       <textarea
         value={passage}
         onChange={(e) => setPassage(e.target.value)}
@@ -84,7 +84,7 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
         <select
           value={mediaOption}
           onChange={(e) => setMediaOption(e.target.value)}
-          className="w-[100px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="w-[90px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="none">None</option>
           <option value="image">Image</option>
@@ -126,13 +126,13 @@ const Comprehension = ({ questionIndex, questionData, updateQuestionData }) => {
       {/* Add Sub-Question */}
       <button
         onClick={addSubQuestion}
-        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
         Add Sub-Question
       </button>
 
       <button onClick={handleSaveQestion}
-      className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+      className='ml-10 bg-[#673ab7] hover:bg-[#673ab7] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-g[#673ab7]'>
         Save question
       </button>
     </div>

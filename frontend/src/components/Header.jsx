@@ -26,6 +26,7 @@ const Header = ({ setHeader }) => {
 
   const saveHeader = () => {
     setHeader({ heading, description })
+    alert("Header saved Successfully")
   }
 
   return (
@@ -59,7 +60,7 @@ const Header = ({ setHeader }) => {
             className="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-2"
           />
           <textarea
-            placeholder="Enter Description (Summary)"
+            placeholder="Enter Description About The Form (Summary)"
             value={description}
             onChange={handleDescriptionChange}
             rows="3"
@@ -85,7 +86,7 @@ const Header = ({ setHeader }) => {
         </div>
       </div>
       <button onClick={saveHeader}
-        className=' mt-10  bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+        className=' mt-10  bg-[#673ab7] hover:bg-[#673ab7] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#673ab7]'>
         Save Header
       </button>
     </header>

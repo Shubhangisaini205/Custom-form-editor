@@ -53,12 +53,13 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
 
   const handleSaveQestion = ()=>{
     updateQuestionData(questionIndex, {categories,items,questionTitle} )
+    alert("Question Saved Succesfully")
   }
 
   return (
     <div className="border-2 p-4 rounded mb-4">
       {/* Question Title Input */}
-      <label className="block mb-2 text-gray-700 font-bold text-left"> Write a Question Title:</label>
+      <label className="block mb-2 text-gray-700 font-bold text-left "> Write a Question Title:</label>
       <input
         type="text"
         placeholder="Enter Question Title"
@@ -73,7 +74,7 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
         <select
           value={mediaOption}
           onChange={(e) => setMediaOption(e.target.value)}
-          className="w-[100px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="w-[90px] block w-full rounded-md border-gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="none">None</option>
           <option value="image">Image</option>
@@ -98,7 +99,7 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
 
       {/* Categories Input */}
       <div className="flex flex-col gap-4 mt-4">
-        <label className="text-gray-700 font-bold text-left">Categories</label>
+        <label className="text-gray-700 font-bold text-left">Categories:</label>
         <input
           type="text"
           name='category1'
@@ -120,8 +121,8 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
       {/* Items and Categories Assignment */}
       <div className="mt-4">
       <div className="flex justify-between w-[320px]">
-    <label className="text-gray-700 font-semibold text-left">Item</label>
-    <label className="text-gray-700 font-semibold text-left">Belongs</label>
+    <label className="text-gray-800 font-bold text-left">Item</label>
+    <label className="text-gray-800 font-bold text-left">Belongs To</label>
   </div>
         {items.map((item, index) => (
           <div key={index} className="flex justify-between gap-4 mt-4 w-[500px]">
@@ -158,13 +159,13 @@ const CategorizeQuestion = ({ questionIndex, questionData, updateQuestionData })
       <button
         type="button"
         onClick={handleAddItem}
-        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
         Add Item
       </button>
 
       <button onClick={handleSaveQestion}
-      className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+      className='ml-10 bg-[#673ab7] hover:bg-[#673ab7] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#673ab7]'>
         save question
       </button>
     </div>

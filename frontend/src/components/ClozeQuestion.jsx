@@ -23,12 +23,6 @@ const ClozeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
     }
   };
 
-
-
-
-
-
-
   const handleConfirmUnderline = () => {
     setOptions((prevOptions) => [...prevOptions, selectedWord]);
     document.execCommand('underline', false, null); // Underline the selected text
@@ -43,24 +37,17 @@ const ClozeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
     setSelectedWord('');
   };
 
+  const handleSaveQestion = () => {
+    updateQuestionData(questionIndex, { paragraph, options })
+    alert("Question Saved Succesfully")
+  }
 
   return (
     <div className="border-2 p-4 rounded mb-4">
-      {/* Paragraph Input */}
-      <label className="block mb-2 text-gray-700 font-bold text-left">Type Sentence:</label>
-      <div
-        ref={paragraphRef}
-        onInput={handleParagraphChange}
-        onMouseUp={handleUnderline}
-        contentEditable
-        suppressContentEditableWarning
-        className="block w-full rounded-md border-2 -gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-      />
-
 
       {/* Cloze Question Preview */}
-      <label className="block mb-2 text-gray-700 font-bold text-left">Question Preview:</label>
-      <p>
+      <label className="block mb-2 text-gray-700 font-bold text-left">Preview:</label>
+      <p className='border-2 rounded-md bg-gray-100 py-5 font-semibold  '>
         {paragraph.split(' ').map((word, index) => {
           const isUnderlined = options.includes(word);
           return isUnderlined ? (
@@ -74,6 +61,20 @@ const ClozeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
           );
         })}
       </p>
+      {/* Paragraph Input */}
+      <label className="block mb-2 text-gray-700 font-bold text-left">Sentence:</label>
+      <div
+        ref={paragraphRef}
+        onInput={handleParagraphChange}
+        onMouseUp={handleUnderline}
+        contentEditable
+        suppressContentEditableWarning
+        className="block w-full rounded-md border-2 -gray-300 py-2 px-3 mb-4 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
+      />
+      <h1 className='text-sm italic  text-left'>(Underline the word  by selecting it here to convert them into blanks)</h1>
+
+
+
 
       {/* Options */}
       <label className="block mt-4 text-gray-700 font-bold text-left">Options:</label>
@@ -119,8 +120,8 @@ const ClozeQuestion = ({ questionIndex, questionData, updateQuestionData }) => {
       )}
 
       <button
-        onClick={() => updateQuestionData(questionIndex,{  paragraph, options } )}
-        className='bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+        onClick={handleSaveQestion}
+        className='bg-[#673ab7] hover:bg-[#673ab7] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#673ab7] mt-5'
       >
         Save Question
       </button>

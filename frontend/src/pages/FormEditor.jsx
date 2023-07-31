@@ -6,7 +6,7 @@ import Comprehension from '../components/Comprehension';
 import { Link } from 'react-router-dom';
 
 const FormEditor = () => {
-  const [ formId, setFormId] = useState("")
+  const [formId, setFormId] = useState("")
   const [questions, setQuestions] = useState([])
   const [header, setHeader] = useState("")
   const addQuestion = (type) => {
@@ -41,8 +41,7 @@ const FormEditor = () => {
 
   let obj = {};
   const handleSaveForm = () => {
-
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$';
     const charactersLength = characters.length;
     let randomId = '';
 
@@ -51,11 +50,16 @@ const FormEditor = () => {
       randomId += characters.charAt(randomIndex);
     }
     setFormId(randomId)
-
-    obj = { formId:randomId, header, questions }
-    
-   console.log(obj)
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/forms/add`, {
+    if (!header) {
+      alert("Add Form title")
+      return;
+    }
+    if (questions.length == 0) {
+      alert("Add atleast one Question")
+      return;
+    }
+    obj = { formId: randomId, header, questions }
+    fetch(`https://custom-form-editor-backend.onrender.com/forms/add`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(obj)
@@ -67,32 +71,33 @@ const FormEditor = () => {
       .catch((err) => console.log(err))
   };
   return (
-    <div className='w-[800px] m-auto mb-20 border-2 p-5 pb-10'>
-      <h2 className='text-2xl font-semibold mb-4'> Custom Form Editor</h2>
+    <div className='w-[800px] m-auto mb-20 border-2 p-5 pb-10 mt-10'>
+      <h2 className='text-3xl font-bold mb-4 p-5'> Custom Form Editor</h2>
       <Header setHeader={setHeader} />
       {questions.map((question, index) => (
         <div key={index} className='border-2 p-4 rounded mb-4'>
-          <div className='flex justify-between '>
+          <div className='flex justify-between p-2'>
             {/* Question Number */}
             <div>
-              <label className='block mb-2 text-gray-700 font-bold text-left'>Question {index + 1}:</label>
+              <label className='block mb-2 text-gray-700 font-bold text-left text-lg'>Question {index + 1}:</label>
             </div>
 
             {/* Points */}
-            <div>
+            <div className='flex gap-4'>
               <label className='block mb-2 text-gray-700 font-bold text-left'>Points:</label>
               <input
                 type='number'
+                min={1}
                 value={question.points}
                 onChange={(e) => handlePointsChange(index, e.target.value)}
-                className='block w-[100px] rounded-md border-gray-300 py-2 px-3 mb-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                className='block w-[70px] rounded-md border-gray-300 py-2 px-3 mb-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
               />
             </div>
 
             {/* Delete Question */}
             <button
               onClick={() => removeQuestion(index)}
-              className=' text-red-500 font-semibold'
+              className=' text-red-500 font-bold'
             >
               Delete Question
             </button>
@@ -122,34 +127,34 @@ const FormEditor = () => {
       ))}
 
       <div className='mb-4 text-left'>
-        <label className='text-lg font-semibold mr-6'>Add a Question:</label>
+        <label className='text-xl font-bold mr-6'>Add a Question:</label>
         <div className='text-center flex gap-10 justify-center mt-6'>
-          <button onClick={() => addQuestion('Categorize')} className=' border-2 p-2 text-green-600 font-semibold'>
+          <button onClick={() => addQuestion('Categorize')} className=' border-2 p-2 text-green-600 font-semibold rounded-full'>
             + Add Categorize Question
           </button>
-          <button onClick={() => addQuestion('Cloze')} className='border-2  p-2  text-green-600 font-semibold'>
+          <button onClick={() => addQuestion('Cloze')} className='border-2  p-2  text-green-600 font-semibold rounded-full'>
             + Add Cloze Question
           </button>
-          <button onClick={() => addQuestion('Comprehension')} className='border-2  p-2  text-green-600 font-semibold'>
+          <button onClick={() => addQuestion('Comprehension')} className='border-2  p-2  text-green-600 font-semibold rounded-full'>
             + Add Comprehension Question
           </button>
         </div>
       </div>
       <button
         onClick={handleSaveForm}
-        className='bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+        className='bg-[#673ab7] hover:bg-[#673ab7] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#673ab7]'
       >
         Save Form
       </button>
-
-      <Link to={`/preview/${formId}`}>
-        <button
-          className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
-        >
-          Preview/Fill
-        </button>
-      </Link>
-
+      {header && questions.length !== 0 ?
+        (<Link to={`/preview/${formId}`}>
+          <button
+            className='ml-10 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+          >
+            Preview/Fill
+          </button>
+        </Link>)
+        : ""}
 
     </div>
   );
